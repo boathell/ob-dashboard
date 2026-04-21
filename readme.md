@@ -1,6 +1,6 @@
 # OceanBase Grafana Dashboards
 
-这个仓库提供可直接导入 Grafana 的 OceanBase 监控 dashboard JSON，数据源面向 VictoriaMetrics / Prometheus 兼容接口。
+这个仓库提供可直接导入 Grafana 的 OceanBase 监控 dashboard JSON，数据源面向 VictoriaMetrics / Prometheus 兼容接口。向 Piysty 致敬，借鉴了该项目的想法。祝贺 Piysty 突破 5k Star。
 
 ## 包含内容
 
@@ -27,7 +27,7 @@
 
 - 第一版 dashboard 可以参考 OCP 文档生成。
 - 后续联调、修正、重写必须以真实环境为准，包括真实 endpoint、metric 名、label 和查询结果。
-- 当前环境中租户 label 以 `tenant_name` 为准，不应默认回退到 `ob_tenant_name`。
+- 当前环境中租户 label 以 `tenant_name` 为准。
 
 ## 详细说明
 
