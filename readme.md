@@ -31,4 +31,4 @@
 
 ## 详细说明
 
-工程化部署、真实环境验证结果、endpoint 矩阵、变量约定和维护规则见 [SETUP.md](/Users/dingfeng/Documents/vibe-coding/ob-dashboard/SETUP.md)。
+工程化部署、真实环境验证结果、endpoint 矩阵、变量约定和维护规则见 [SETUP.md](./SETUP.md)。
