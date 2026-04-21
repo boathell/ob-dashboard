@@ -2,6 +2,7 @@
 !.gitignore
 !AGENTS.md
 !readme.md
+!SETUP.md
 !dashboards/
 !dashboards/*.json
 
