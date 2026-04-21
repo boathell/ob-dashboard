@@ -2,8 +2,6 @@
 
 这个仓库提供可直接导入 Grafana 的 OceanBase 监控 dashboard JSON，数据源面向 VictoriaMetrics / Prometheus 兼容接口。
 
-当前仓库只跟踪最终交付物 `dashboards/*.json`。`panel/`、`.omx/` 和其他本地生成或验证痕迹不纳入版本管理。
-
 ## 包含内容
 
 仓库当前提供 7 份 dashboard：
