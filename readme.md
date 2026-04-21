@@ -1,6 +1,6 @@
 # OceanBase Grafana Dashboards
 
-这个仓库提供可直接导入 Grafana 的 OceanBase 监控 dashboard JSON，数据源面向 VictoriaMetrics / Prometheus 兼容接口。向 Piysty 致敬，借鉴了该项目的想法。祝贺 Piysty 突破 5k Star。
+这个仓库提供可直接导入 Grafana 的 OceanBase 监控 dashboard JSON，数据源面向 VictoriaMetrics / Prometheus 兼容接口。向 Pigsty 致敬，借鉴了该项目的想法。祝贺 Pigsty 突破 5k Star。
 
 ## 包含内容
 
