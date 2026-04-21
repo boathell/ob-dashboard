@@ -1,0 +1,376 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "OceanBase 集群进程资源使用",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RSS Memory"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU Percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "RSS Memory - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "avg(process_cpu_percent{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "CPU Percent - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "avg(process_fd_count{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "FD Count - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "avg(process_thread_count{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "Thread Count - {{svr_ip}}",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "OceanBase 集群错误日志",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Observer ERROR - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"election\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Election ERROR - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"rootservice\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Rootservice ERROR - {{svr_ip}}",
+          "refId": "C"
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "observer",
+    "node",
+    "process",
+    "cluster",
+    "zone",
+    "svr_ip"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "zone",
+        "label": "Zone",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "svr_ip",
+        "label": "Server IP",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "interval",
+        "label": "Interval",
+        "type": "interval",
+        "hide": 0,
+        "query": "30s,1m,5m",
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": true,
+          "text": "1m",
+          "value": "1m"
+        },
+        "options": [],
+        "skipUrlSync": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "OceanBase Observer 节点",
+  "uid": "obsty-observer-node",
+  "version": 1,
+  "weekStart": "",
+  "description": "仅包含 node/ob exporter 指标。依赖 endpoint: /metrics/node/ob"
+}

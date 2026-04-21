@@ -1,0 +1,14 @@
+*
+!.gitignore
+!AGENTS.md
+!readme.md
+!dashboards/
+!dashboards/*.json
+
+# Explicitly ignore local and intermediate artifacts.
+.DS_Store
+.omx/
+panel/
+__pycache__/
+*.pyc
+.venv/

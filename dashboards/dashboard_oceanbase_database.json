@@ -1,0 +1,5435 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "OceanBase 集群后台工作负载",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"ON_CPU\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "ON CPU",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"APPLICATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Application",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"CONFIGURATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Configuration",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"CONCURRENCY\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Concurrency",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"COMMIT\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Commit",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"USER_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "User IO",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"SYSTEM_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "System IO",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_background_waitevent_cnt{wait_class=\"CLUSTER\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Cluster",
+          "refId": "H"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "OceanBase 集群缓存命中率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * 1 / (1 + sum(rate(ob_sysstat{stat_id=\"50009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"50008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Block Cache",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * 1 / (1 + sum(rate(ob_sysstat{stat_id=\"50001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"50000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Row Cache",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(rate(ob_plan_cache_hit_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_plan_cache_access_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Plan Cache",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * 1 / (1 + sum(rate(ob_sysstat{stat_id=\"50038\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"50037\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Clog Cache",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * 1 / (1 + sum(rate(ob_sysstat{stat_id=\"50005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"50004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Bloom Filter Cache",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * 1 / (1 + sum(rate(ob_sysstat{stat_id=\"50011\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"50010\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Location Cache",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "OceanBase 集群缓存大小",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_cache_size_bytes{cache_name=\"user_block_cache\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Block Cache",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"120008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Row Cache",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_plan_cache_memory_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Plan Cache",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"120001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Clog Cache",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"120009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Bloom Filter Cache",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"120000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Location Cache",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "OceanBase 集群事务日志指标",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Log Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Bps"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sync RT"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Write Disk RT"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Log Count",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80057\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Log Size",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Sync RT",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80041\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"80040\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Write Disk RT",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "OceanBase 集群 Clog 同步延迟",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ob_clog_max_sync_delay_seconds{replica_type=\"0\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Full Replica",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ob_clog_max_sync_delay_seconds{replica_type=\"5\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Log Only Replica",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ob_clog_max_sync_delay_seconds{replica_type=\"16\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Read Only Replica",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "OceanBase 集群 DB Time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"200002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "DB CPU",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"200010\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Non-Idle Wait Time",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"200006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Background DB CPU",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"200013\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Background Non-Idle Wait",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "OceanBase 集群磁盘使用",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Log Disk Used Percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_log_disk_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Log Disk Total",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_log_disk_used_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Log Disk Used",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(ob_tenant_log_disk_used_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / sum(ob_tenant_log_disk_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Log Disk Used Percent",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_server_data_size{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Data Size",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_server_required_size{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Disk Used",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "OceanBase 集群前台工作负载",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"ON_CPU\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "ON CPU",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"APPLICATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Application",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"CONFIGURATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Configuration",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"CONCURRENCY\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Concurrency",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"COMMIT\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Commit",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"USER_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "User IO",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"SYSTEM_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "System IO",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"NETWORK\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Network",
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_foreground_waitevent_cnt{wait_class=\"CLUSTER\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Cluster",
+          "refId": "I"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "OceanBase 集群物理 IO 次数",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "iops"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "IO Read",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60003\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "IO Write",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80007\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Clog Read",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Clog Write",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "OceanBase 集群 IO 吞吐量",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 72
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "IO Read",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "IO Write",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Clog Read",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"80002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Clog Write",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "OceanBase 集群事务锁等待",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 80
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Wait Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60021\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Lock Success",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60022\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Lock Fail",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"60023\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / (sum(rate(ob_sysstat{stat_id=\"60021\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"60022\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "Wait Time",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "OceanBase 集群 MEMStore 使用",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 88
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "MB"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"130001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 1048576",
+          "legendFormat": "Total MemStore Used",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"130000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 1048576",
+          "legendFormat": "Active MemStore",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"130002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 1048576",
+          "legendFormat": "Major Freeze Trigger",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sysstat{stat_id=\"130004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 1048576",
+          "legendFormat": "MemStore Limit",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ob_partition_frozen_memstore_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name)",
+          "legendFormat": "Frozen MemStore Count",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "OceanBase 集群打开游标数",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 96
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(delta(ob_sysstat{stat_id=\"40030\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Opened Cursors",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "OceanBase 集群分区状态",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 104
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(partition_leader_absent_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name)",
+          "legendFormat": "Leader Absent",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(partition_replica_absent_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name)",
+          "legendFormat": "Replica Absent",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(primary_leaders_cnt{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Primary Leaders",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(partition_replicas_cnt{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name)",
+          "legendFormat": "Partition Replicas",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(log_stream_leaders_cnt{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Log Stream Leaders",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "OceanBase 集群并行执行工作线程使用率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 112
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(px_target_usage{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "PX Worker Usage",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "OceanBase 集群 QPS 分类",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 120
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "SELECT",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "INSERT",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "UPDATE",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "DELETE",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "REPLACE",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40018\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "OTHER",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "OceanBase 集群请求等待队列",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 128
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Queue Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"20000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Enqueue Count",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"20001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Dequeue Count",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"20002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"20001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Queue Time",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_request_queue_total_size{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Queue Size",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_request_queue_large_size{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Large Queue Size",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "OceanBase 集群 RPC 包指标",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 136
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Packet In RT"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Packet Out RT"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"10001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Packet In",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"10003\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Packet Out",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "(sum(rate(ob_sysstat{stat_id=\"10005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"10006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)) / sum(rate(ob_sysstat{stat_id=\"10000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Packet In RT",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "(sum(rate(ob_sysstat{stat_id=\"10005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"10006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)) / sum(rate(ob_sysstat{stat_id=\"10002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Packet Out RT",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "OceanBase 集群会话数",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 144
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_session_active_num{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Active Session",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_session_all_num{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "All Session",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "OceanBase 集群 SQL 执行阶段",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 152
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_parse{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In Parse",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_plan_cache{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In Plan Cache",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_sql_optimize{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In SQL Optimize",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_sql_execution{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In SQL Execution",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_committing{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In Committing",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_storage_read{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In Storage Read",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_sql_event_in_storage_write{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "In Storage Write",
+          "refId": "G"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "OceanBase 集群 SQL 执行计划类别",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 160
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Local Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Remote Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Distributed Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40010\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Local Count",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40011\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Remote Count",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40012\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Distributed Count",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40116\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40010\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Local Time",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40117\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40011\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Remote Time",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40118\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40012\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Distributed Time",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "OceanBase 集群 SQL 响应时间",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 168
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "(sum(rate(ob_sysstat{stat_id=\"40009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40019\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)) / (sum(rate(ob_sysstat{stat_id=\"40000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) + sum(rate(ob_sysstat{stat_id=\"40018\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name))",
+          "legendFormat": "ALL",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "SELECT",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40003\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "INSERT",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40007\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "UPDATE",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "REPLACE",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "DELETE",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"40019\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"40018\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "OTHER",
+          "refId": "G"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "OceanBase 集群 SQL 响应时间分位数",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 176
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "histogram_quantile(0.99, sum(rate(ob_query_rt_total_cumulative_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (le, ob_cluster_name))",
+          "legendFormat": "TP99",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "histogram_quantile(0.95, sum(rate(ob_query_rt_total_cumulative_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (le, ob_cluster_name))",
+          "legendFormat": "TP95",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "title": "OceanBase 集群 500 租户内存",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 184
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "GB"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Hold Percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant500_memory_hold_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 1073741824",
+          "legendFormat": "Memory Hold",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(ob_tenant500_memory_hold_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name) / sum(ob_server_resource_memory_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (ob_cluster_name)",
+          "legendFormat": "Memory Hold Percent",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "OceanBase 集群租户资源使用率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 192
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"140013\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(ob_sysstat{stat_id=\"140005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / 100",
+          "legendFormat": "CPU Percent",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(ob_sysstat{stat_id=\"140006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / sum(ob_sysstat{stat_id=\"140005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Thread Percent",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * avg(ob_sysstat{stat_id=\"140003\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / avg(ob_sysstat{stat_id=\"140002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Memory Percent",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(ob_sysstat{stat_id=\"130001\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / sum(ob_sysstat{stat_id=\"130004\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Memstore Percent",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 * sum(ob_sysstat{stat_id=\"130000\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name) / sum(ob_sysstat{stat_id=\"130002\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (ob_cluster_name)",
+          "legendFormat": "Active Memstore Percent",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "title": "OceanBase 集群 TPS 趋势",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 200
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "TPS",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30007\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Commit",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Rollback",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30011\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Timeout",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "OceanBase 集群事务数量",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 208
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30012\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Single Partition",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30013\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Multi Partition",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "title": "OceanBase 集群事务响应时间",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 216
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30006\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30005\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "TPS RT",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30008\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30007\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Commit RT",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30010\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30009\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Rollback RT",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30080\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30012\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Single Partition RT",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30081\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_sysstat{stat_id=\"30013\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Distributed RT",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "title": "OceanBase 集群事务表读请求命中",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 224
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30082\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Mini Cache Hit",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30083\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "KV Cache Hit",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30084\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "TX CTX Hit",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30085\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Memtable Hit",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30086\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "SSTable Hit",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "title": "OceanBase 集群等待事件耗时",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 232
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_waitevent_wait_seconds_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name) / sum(rate(ob_waitevent_wait_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Avg Wait Time",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_time_waited{event_group=\"APPLICATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Application",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_time_waited{event_group=\"CONCURRENCY\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Concurrency",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_time_waited{event_group=\"COMMIT\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Commit",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_time_waited{event_group=\"USER_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "User IO",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_time_waited{event_group=\"SYSTEM_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "System IO",
+          "refId": "F"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "title": "OceanBase 集群等待事件",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 240
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_waitevent_wait_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Total Waits",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"APPLICATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Application",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"CONFIGURATION\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Configuration",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"CONCURRENCY\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Concurrency",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"COMMIT\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Commit",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"USER_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "User IO",
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"SYSTEM_IO\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "System IO",
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"NETWORK\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Network",
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_system_event_total_waits{event_group=\"CLUSTER\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Cluster",
+          "refId": "I"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "title": "OceanBase 集群 XA 事务",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 248
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30220\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "XA Start",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30221\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "XA Read Only",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sysstat{stat_id=\"30222\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "XA One Phase Commit",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "title": "集群活跃节点数",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 256
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_server_num{status=\"active\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "title": "集群非活跃节点数",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 259
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_server_num{status=\"inactive\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "title": "仲裁非活跃 Server 数",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 262
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(arbitration_status_inactive_server_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "title": "合并错误状态",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 265
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_compaction_is_error{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name)",
+          "legendFormat": "{{tenant_name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "title": "OB 连通性 - MonitorDB",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 273
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "断开"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "1": {
+                  "text": "正常"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "min(oceanbase_connectivity{target=\"monitordb\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "title": "OB 连通性 - OceanBase",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 276
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "断开"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "1": {
+                  "text": "正常"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "min(oceanbase_connectivity{target=\"oceanbase\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "title": "节点磁盘空间",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 279
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Used%.*"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_disk_free_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "Free - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_disk_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "Total - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "100 - 100 * sum(ob_disk_free_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip) / sum(ob_disk_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "Used% - {{svr_ip}}",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "title": "日志流降级数量",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 287
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(log_stream_degraded_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name)",
+          "legendFormat": "{{tenant_name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "title": "节点 CPU 核数",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 295
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_server_resource_cpu{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "title": "节点内存容量",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 298
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_server_resource_memory_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "title": "租户日志同步延迟",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 301
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_log_sync_delay{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name)",
+          "legendFormat": "{{tenant_name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "title": "租户内存使用趋势",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 309
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_memory_used_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name)",
+          "legendFormat": "{{tenant_name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "title": "租户资源饱和度",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 317
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_assigned_cpu_assigned{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) / sum(ob_tenant_assigned_cpu_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) * 100",
+          "legendFormat": "CPU - {{tenant_name}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_tenant_assigned_mem_assigned{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) / sum(ob_tenant_assigned_mem_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) * 100",
+          "legendFormat": "Memory - {{tenant_name}}",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "title": "租户 Memstore 使用率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 325
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ob_memstore_active_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) / sum(ob_memstore_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}) by (tenant_name) * 100",
+          "legendFormat": "Memstore - {{tenant_name}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "title": "节点日志盘使用率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 333
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "ob_disk_log_used_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"} / ob_disk_log_total_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"} * 100",
+          "legendFormat": "Log Disk - {{svr_ip}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "title": "节点健康综合状态",
+      "type": "stat",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 341
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "inactive",
+                  "color": "red"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "1": {
+                  "text": "active",
+                  "color": "green"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "showPercentChange": false,
+        "wideLayout": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ntp_service_available{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "NTP {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(node_filesystem_readonly{is_ob_disk=\"1\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "FS-RO {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(observer_coredump_time_seconds{ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}) by (svr_ip)",
+          "legendFormat": "Coredump {{svr_ip}}",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "title": "SQL 执行阶段耗时分解",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 344
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sql_event_in_parse{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Parse",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sql_event_in_sql_optimize{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Optimize",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sql_event_in_sql_execution{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Execution",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sql_event_in_storage_read{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Storage Read",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(rate(ob_sql_event_in_storage_write{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",tenant_name=~\"$tenant\"}[$interval])) by (ob_cluster_name)",
+          "legendFormat": "Storage Write",
+          "refId": "E"
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "database",
+    "cluster",
+    "zone",
+    "tenant"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(ob_sysstat, ob_cluster_name)",
+        "query": "label_values(ob_sysstat, ob_cluster_name)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "zone",
+        "label": "Zone",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(ob_sysstat{ob_cluster_name=\"$cluster\"}, obzone)",
+        "query": "label_values(ob_sysstat{ob_cluster_name=\"$cluster\"}, obzone)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "tenant",
+        "label": "Tenant",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "VictoriaMetrics"
+        },
+        "definition": "label_values(ob_sysstat{ob_cluster_name=\"$cluster\"}, tenant_name)",
+        "query": "label_values(ob_sysstat{ob_cluster_name=\"$cluster\"}, tenant_name)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "interval",
+        "label": "Interval",
+        "type": "interval",
+        "hide": 0,
+        "query": "30s,1m,5m",
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": true,
+          "text": "1m",
+          "value": "1m"
+        },
+        "options": [],
+        "skipUrlSync": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "OceanBase 数据库概览",
+  "uid": "obsty-oceanbase-database",
+  "version": 1,
+  "weekStart": "",
+  "description": "仅包含 OceanBase 数据库指标。依赖 endpoint: /metrics/ob/basic, /metrics/ob/extra"
+}
