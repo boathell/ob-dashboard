@@ -1,4 +1,55 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "OCP Agent Prometheus datasource",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
+  "title": "OceanBase 主机 & Observer 节点",
+  "uid": "obsty-observer-node",
+  "tags": [
+    "host",
+    "observer",
+    "node",
+    "cluster",
+    "zone",
+    "svr_ip"
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "refresh": "30s",
+  "style": "dark",
+  "schemaVersion": 39,
+  "graphTooltip": 1,
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "timepicker": {},
+  "timezone": "",
+  "version": 1,
+  "weekStart": "",
   "annotations": {
     "list": [
       {
@@ -15,26 +66,123 @@
       }
     ]
   },
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": null,
-  "links": [],
-  "liveNow": false,
+  "templating": {
+    "list": [
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "zone",
+        "label": "Zone",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "svr_ip",
+        "label": "Server IP",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
+        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
+        "refresh": 1,
+        "sort": 1,
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "options": [],
+        "skipUrlSync": false
+      },
+      {
+        "name": "interval",
+        "label": "Interval",
+        "type": "interval",
+        "hide": 0,
+        "query": "30s,1m,5m",
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": true,
+          "text": "1m",
+          "value": "1m"
+        },
+        "options": [],
+        "skipUrlSync": false
+      }
+    ]
+  },
   "panels": [
     {
-      "id": 1,
-      "title": "OceanBase 集群进程资源使用",
+      "id": 100,
+      "type": "row",
+      "title": "Observer 进程资源",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 10,
+      "title": "OceanBase 进程资源使用",
       "type": "timeseries",
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "datasource": {
         "type": "prometheus",
-        "uid": "VictoriaMetrics"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -123,7 +271,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
           "legendFormat": "RSS Memory - {{svr_ip}}",
@@ -132,7 +280,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "avg(process_cpu_percent{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
           "legendFormat": "CPU Percent - {{svr_ip}}",
@@ -141,7 +289,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "avg(process_fd_count{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
           "legendFormat": "FD Count - {{svr_ip}}",
@@ -150,7 +298,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "avg(process_thread_count{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
           "legendFormat": "Thread Count - {{svr_ip}}",
@@ -159,18 +307,18 @@
       ]
     },
     {
-      "id": 2,
-      "title": "OceanBase 集群错误日志",
+      "id": 11,
+      "title": "OceanBase 错误日志",
       "type": "timeseries",
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "datasource": {
         "type": "prometheus",
-        "uid": "VictoriaMetrics"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -234,7 +382,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
           "legendFormat": "Observer ERROR - {{svr_ip}}",
@@ -243,7 +391,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"election\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
           "legendFormat": "Election ERROR - {{svr_ip}}",
@@ -252,125 +400,1060 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "VictoriaMetrics"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum(rate(ob_log_level_count{level=\"ERROR\",logSourceType=\"rootservice\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
           "legendFormat": "Rootservice ERROR - {{svr_ip}}",
           "refId": "C"
         }
       ]
+    },
+    {
+      "id": 12,
+      "title": "租户 500 内存占用",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "ob_tenant500_memory_hold_bytes{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}",
+          "legendFormat": "500-Tenant Memory - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "ob_tenant500_memory_hold_bytes{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"} / ob_server_resource_memory_bytes{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"} * 100",
+          "legendFormat": "500-Tenant Memory % - {{svr_ip}}",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "type": "row",
+      "title": "主机系统负载与 CPU",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 20,
+      "title": "主机系统负载",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_load1{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "Load 1 - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_load5{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "Load 5 - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_load15{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "Load 15 - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(node_load1{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) / sum(cpu_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "Load 1 Per CPU - {{svr_ip}}",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "主机 CPU & IO 使用率",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IO Queue Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "100 * (1 - sum(rate(node_cpu_seconds_total{mode=~\"idle|iowait|steal\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) / sum(cpu_count{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip))",
+          "legendFormat": "CPU Percent - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(io_util{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "IO Util - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(delta(node_disk_io_time_weighted_seconds_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "IO Queue Size - {{svr_ip}}",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "type": "row",
+      "title": "内存",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 30,
+      "title": "主机内存使用",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "GB"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "(avg(node_memory_MemTotal_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) - avg(node_memory_MemFree_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) - avg(node_memory_Cached_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) - avg(node_memory_Buffers_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)) / 1073741824",
+          "legendFormat": "Memory Used - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_memory_MemFree_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) / 1073741824",
+          "legendFormat": "Memory Free - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_memory_Cached_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) / 1073741824",
+          "legendFormat": "Memory Cached - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(node_memory_Buffers_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) / 1073741824",
+          "legendFormat": "Memory Buffers - {{svr_ip}}",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "(1 - (avg(node_memory_MemFree_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) + avg(node_memory_Cached_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) + avg(node_memory_Buffers_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip) + avg(node_memory_SReclaimable_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)) / avg(node_memory_MemTotal_bytes{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)) * 100",
+          "legendFormat": "Memory Percent - {{svr_ip}}",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "type": "row",
+      "title": "磁盘",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 40,
+      "title": "主机磁盘 IO",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "iops"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Read Byte"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "MBs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Write Byte"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "MBs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Read Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_disk_reads_completed_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Read IOPS - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_disk_writes_completed_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Write IOPS - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_disk_read_bytes_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) / 1048576",
+          "legendFormat": "Read Byte - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_disk_written_bytes_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) / 1048576",
+          "legendFormat": "Write Byte - {{svr_ip}}",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "1000000 * (avg(rate(node_disk_read_time_seconds_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)) / (avg(rate(node_disk_reads_completed_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip))",
+          "legendFormat": "Read Time - {{svr_ip}}",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "title": "主机 Inode & 磁盘空间",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Disk Used.*"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "round(100 - 100 * sum(node_filesystem_files_free{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}) by (svr_ip) / sum(node_filesystem_files{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}) by (svr_ip), 0.01)",
+          "legendFormat": "Inode Used% - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(node_filesystem_size_bytes{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"} - node_filesystem_avail_bytes{ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}) by (svr_ip)",
+          "legendFormat": "Disk Used - {{svr_ip}}",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "type": "row",
+      "title": "网络",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 57
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 50,
+      "title": "主机网络指标",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 58
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "MBs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TCP Retrans Percent"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "NTP Offset"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Network Errors"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_network_receive_bytes_total{device!=\"lo\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) / 1048576",
+          "legendFormat": "Net Receive - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "avg(rate(node_network_transmit_bytes_total{device!=\"lo\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) / 1048576",
+          "legendFormat": "Net Send - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "max(tcp_retrans{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}) by (svr_ip)",
+          "legendFormat": "TCP Retrans Percent - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "max(abs(node_ntp_offset_seconds{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"})) by (svr_ip) * 1000",
+          "legendFormat": "NTP Offset - {{svr_ip}}",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(delta(node_network_receive_errs_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip) + sum(delta(node_network_transmit_errs_total{ob_cluster_name=\"$cluster\",obzone=~\"$zone\",svr_ip=~\"$svr_ip\"}[$interval])) by (svr_ip)",
+          "legendFormat": "Network Errors - {{svr_ip}}",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "title": "网络丢包与错误趋势",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 58
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "insertNulls": false,
+            "hiddenFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barWidthFactor": 0.6,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(rate(node_network_receive_drop_total{device!=\"lo\",ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}[])) by (svr_ip)",
+          "legendFormat": "RX Drop - {{svr_ip}}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(rate(node_network_transmit_drop_total{device!=\"lo\",ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}[])) by (svr_ip)",
+          "legendFormat": "TX Drop - {{svr_ip}}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(rate(node_network_receive_errs_total{device!=\"lo\",ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}[])) by (svr_ip)",
+          "legendFormat": "RX Err - {{svr_ip}}",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "sum(rate(node_network_transmit_errs_total{device!=\"lo\",ob_cluster_name=\"\",obzone=~\"\",svr_ip=~\"\"}[])) by (svr_ip)",
+          "legendFormat": "TX Err - {{svr_ip}}",
+          "refId": "D"
+        }
+      ]
     }
-  ],
-  "refresh": "30s",
-  "schemaVersion": 39,
-  "style": "dark",
-  "tags": [
-    "observer",
-    "node",
-    "process",
-    "cluster",
-    "zone",
-    "svr_ip"
-  ],
-  "templating": {
-    "list": [
-      {
-        "name": "cluster",
-        "label": "Cluster",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "VictoriaMetrics"
-        },
-        "definition": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
-        "query": "label_values(process_memory_rss_bytes{name=\"observer\"}, ob_cluster_name)",
-        "refresh": 1,
-        "sort": 1,
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "current": {
-          "selected": true,
-          "text": "",
-          "value": ""
-        },
-        "options": [],
-        "skipUrlSync": false
-      },
-      {
-        "name": "zone",
-        "label": "Zone",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "VictoriaMetrics"
-        },
-        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
-        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\"}, obzone)",
-        "refresh": 1,
-        "sort": 1,
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "options": [],
-        "skipUrlSync": false
-      },
-      {
-        "name": "svr_ip",
-        "label": "Server IP",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "VictoriaMetrics"
-        },
-        "definition": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
-        "query": "label_values(process_memory_rss_bytes{name=\"observer\",ob_cluster_name=\"$cluster\",obzone=~\"$zone\"}, svr_ip)",
-        "refresh": 1,
-        "sort": 1,
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "options": [],
-        "skipUrlSync": false
-      },
-      {
-        "name": "interval",
-        "label": "Interval",
-        "type": "interval",
-        "hide": 0,
-        "query": "30s,1m,5m",
-        "auto": false,
-        "auto_count": 30,
-        "auto_min": "10s",
-        "current": {
-          "selected": true,
-          "text": "1m",
-          "value": "1m"
-        },
-        "options": [],
-        "skipUrlSync": false
-      }
-    ]
-  },
-  "time": {
-    "from": "now-1h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "",
-  "title": "OceanBase Observer 节点",
-  "uid": "obsty-observer-node",
-  "version": 1,
-  "weekStart": "",
-  "description": "仅包含 node/ob exporter 指标。依赖 endpoint: /metrics/node/ob"
+  ]
 }

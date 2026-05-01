@@ -5,6 +5,8 @@
 !SETUP.md
 !dashboards/
 !dashboards/*.json
+!provisioning/
+!provisioning/*.yaml
 
 # Explicitly ignore local and intermediate artifacts.
 .DS_Store
